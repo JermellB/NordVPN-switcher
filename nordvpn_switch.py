@@ -1,4 +1,3 @@
-import random
 import subprocess
 import psutil
 import re
@@ -13,6 +12,7 @@ import requests
 import json
 import importlib.resources as pkg_resources
 from nordvpn_switcher import NordVPN_options
+import secrets
 
 ##########################################
 def additional_settings_linux(additional_settings):
@@ -54,7 +54,7 @@ def get_ip():
             'Accept-Language': 'en-US,en;q=0.8',
             'Connection': 'keep-alive'}
     ip_check_websites = ['http://ip4only.me/api/',"https://ident.me/"]
-    website_pick = random.choice(ip_check_websites)
+    website_pick = secrets.SystemRandom().choice(ip_check_websites)
     request_currentip = urllib.request.Request(url=website_pick, headers=headers)
     ip = urllib.request.urlopen(request_currentip).read().decode('utf-8')
     if website_pick == 'http://ip4only.me/api/':
@@ -290,16 +290,16 @@ def initialize_VPN(stored_settings=0,save=0,area_input=None):
                             input_needed = 1
                             continue
                     if re.compile(r'[^0-9]').search(settings_servers.strip()):
-                        sample_countries = random.sample(sample_countries, samplesize)
+                        sample_countries = secrets.SystemRandom().sample(sample_countries, samplesize)
                 #3.1.2 if asked for random countries within larger region#
                 elif any(re.findall(r'europe|americas|africa east india|asia pacific', settings_servers)):
                     larger_region = country_dict[re.sub("random|countries", "", settings_servers).rstrip('0123456789.- ').lower().strip()]
-                    sample_countries = random.sample(larger_region,samplesize)
+                    sample_countries = secrets.SystemRandom().sample(larger_region,samplesize)
                     input_needed = 0
                 #3.1.3 if asked for random countries globally#
                 else:
                     if re.compile(r'[^0-9]').search(settings_servers.strip()):
-                        sample_countries = random.sample(country_dict['countries'], samplesize)
+                        sample_countries = secrets.SystemRandom().sample(country_dict['countries'], samplesize)
                         input_needed = 0
                     else:
                         sample_countries = country_dict['countries']
@@ -394,7 +394,7 @@ def rotate_VPN(instructions=None,google_check = 0):
     for i in range(4):
 
         if len(settings) > 1:
-            settings_pick = list([random.choice(settings)])
+            settings_pick = list([secrets.SystemRandom().choice(settings)])
         else:
             settings_pick = settings
 
