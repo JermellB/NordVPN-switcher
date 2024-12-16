@@ -113,7 +113,7 @@ def initialize_VPN(stored_settings=0,save=0,area_input=None):
 
         # start NordVPN app and disconnect from VPN service if necessary#
         print("Opening NordVPN app and disconnecting if necessary...")
-        open_nord_win = subprocess.Popen(["nordvpn", "-d"],shell=True,cwd=cwd_path,stdout=DEVNULL)
+        open_nord_win = subprocess.Popen(["nordvpn", "-d"],shell=False, cwd=cwd_path,stdout=DEVNULL)
         while ("NordVPN.exe" in (p.name() for p in psutil.process_iter())) == False:
             time.sleep(3)
         open_nord_win.kill()
@@ -407,7 +407,7 @@ def rotate_VPN(instructions=None,google_check = 0):
 
         try:
             if opsys == "Windows":
-                new_connection = subprocess.Popen(input, shell=True, cwd=cwd_path)
+                new_connection = subprocess.Popen(input, shell=False, cwd=cwd_path)
                 new_connection.wait(50)
             else:
                 new_connection = check_output(input)
@@ -483,7 +483,7 @@ def terminate_VPN(instructions=None):
 
     print("\nDisconnecting...")
     if opsys == "Windows":
-        terminate = subprocess.Popen(["nordvpn", "-d"],shell=True,cwd=cwd_path,stdout=DEVNULL)
+        terminate = subprocess.Popen(["nordvpn", "-d"],shell=False, cwd=cwd_path,stdout=DEVNULL)
     else:
         terminate = subprocess.Popen(["nordvpn", "d"],stdout=DEVNULL)
 
