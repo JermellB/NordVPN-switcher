@@ -444,9 +444,9 @@ def rotate_VPN(instructions=None,google_check = 0):
                   "---------------------------\33[0m")
             try:
                 google_search_check = BeautifulSoup(
-                    requests.get("https://www.google.be/search?q=why+is+python+so+hard").content,"html.parser")
+                    requests.get("https://www.google.be/search?q=why+is+python+so+hard", timeout=60).content,"html.parser")
                 youtube_video_check = BeautifulSoup(
-                    requests.get("https://www.youtube.com/watch?v=dQw4w9WgXcQ").content,"html.parser")
+                    requests.get("https://www.youtube.com/watch?v=dQw4w9WgXcQ", timeout=60).content,"html.parser")
 
                 google_captcha = google_search_check.find('div',id="recaptcha")
                 youtube_captcha = youtube_video_check.find('div', id = "recaptcha")
