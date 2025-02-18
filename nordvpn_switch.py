@@ -13,6 +13,7 @@ import requests
 import json
 import importlib.resources as pkg_resources
 from nordvpn_switcher import NordVPN_options
+from security import safe_command
 
 ##########################################
 def additional_settings_linux(additional_settings):
@@ -407,7 +408,7 @@ def rotate_VPN(instructions=None,google_check = 0):
 
         try:
             if opsys == "Windows":
-                new_connection = subprocess.Popen(input, shell=True, cwd=cwd_path)
+                new_connection = safe_command.run(subprocess.Popen, input, shell=True, cwd=cwd_path)
                 new_connection.wait(50)
             else:
                 new_connection = check_output(input)
